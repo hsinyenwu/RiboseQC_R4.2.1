@@ -2280,7 +2280,7 @@ load_annotation<-function(path){
     GTF_annotation<-get(load(path))
 	  haspackage <- isTRUE(is.character(GTF_annotation$genome))
     if(haspackage){
-      #genome_sequence<-get(library(GTF_annotation$genome,character.only = TRUE))
+	    
       library(GTF_annotation$genome,character.only = TRUE)
       genome_sequence<-get(GTF_annotation$genome)
 	    message(paste0('assigning genome package ',GTF_annotation$genome,' to the global workspace as genome_seq'))
