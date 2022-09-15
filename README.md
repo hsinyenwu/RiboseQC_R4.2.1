@@ -4,7 +4,7 @@ Few modification to let RiboseQC run on R 4.2.1.
       nsns<-exonicParts(annotation, linked.to.single.gene.only=F)
       mcols(nsns) <- DataFrame(mcols(nsns)[c(3,2)],exonic_part=NA) 
       #disjointExons is deprecated
-      #replacing disjointExons with exonicParts and changing the format back
+      #replacing disjointExons with exonicParts and changing the format back by Tim-Yu
       ```
       See [Tim-Yu](https://github.com/Tim-Yu/RiboseQC).  
 2. Removed  line ```genome_sequence<-get(library(GTF_annotation$genome,character.only = TRUE))``` from the ```load_annotation``` function.
