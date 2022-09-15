@@ -9,6 +9,12 @@ Few modification to let RiboseQC run on R 4.2.1.
       See [Tim-Yu's github](https://github.com/Tim-Yu/RiboseQC).  
 2. Removed  line ```genome_sequence<-get(library(GTF_annotation$genome,character.only = TRUE))``` from the ```load_annotation``` function.
 
+Run the following code to install and load.
+```
+install_github(hsinyenwu/RiboseQC_R4.2.1)
+library("RiboseQC")
+```
+
 # Ribo-seQC
 A comprehensive analysis tool for Ribo-seq and small RNA-seq data
 
