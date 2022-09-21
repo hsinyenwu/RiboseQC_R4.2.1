@@ -11,7 +11,7 @@ Few modification to let RiboseQC run on R 4.2.1.
 
 Run the following code to install and load.
 ```
-install_github(hsinyenwu/RiboseQC_R4.2.1)
+install_github("hsinyenwu/RiboseQC_R4.2.1")
 library("RiboseQC")
 ```
 
