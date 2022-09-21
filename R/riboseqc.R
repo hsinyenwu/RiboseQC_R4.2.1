@@ -2692,13 +2692,13 @@ prepare_annotation_files<-function(annotation_directory,twobit_file=NULL,gtf_fil
 
          gtfdata <- import.gff2(gtf_file,colnames=c("gene_id","gene_biotype","gene_type","gene_name","gene_symbol","transcript_id","transcript_biotype","transcript_type","type"))
          n_transcripts = length(unique(gtfdata$transcript_id))
-         print(head(gtfdata))
+         print(head(gtfdata,50))
 	 stopifnot('transcript' %in% gtfdata$type)
          gtfdata <- subset(gtfdata, type=='transcript')
          gtfdata$type <- NULL
 	 print(length(unique(gtfdata$transcript_id)))
          print(n_transcripts)
-         stopifnot(length(unique(gtfdata$transcript_id))==n_transcripts+1)
+         stopifnot(length(unique(gtfdata$transcript_id))==n_transcripts-1)
 
          trann<-unique(mcols(gtfdata))
 
