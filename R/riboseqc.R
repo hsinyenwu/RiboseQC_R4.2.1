@@ -405,7 +405,8 @@ plot_read_length_dist <- function(rld, sample, output_rds_path=""){
     #rld.m$Var2 <- factor(rld.m$Var2, levels=levels_rl)
     rld.m$Var2 <- as.numeric(rld.m$Var2)
     #colssi<-alpha(rainbow(length(unique(rld.m$Var1))),alpha = .7)
-    colssi<-alpha(c("blue","dark red","forestgreen",rainbow(length(unique(rld.m$Var1))-3)),alpha = .7)
+    #colssi<-alpha(c("blue","dark red","forestgreen",rainbow(length(unique(rld.m$Var1))-3)),alpha = .7)
+    colssi<-alpha(c("forestgreen","dark red","blue",rainbow(length(unique(rld.m$Var1))-3)),alpha = .7)
 
 
 
@@ -427,8 +428,8 @@ plot_read_length_dist <- function(rld, sample, output_rds_path=""){
     rld_norm.m$Var1 <- factor(rld_norm.m$Var1, levels=levels_comp)
     #rld_norm.m$Var2 <- factor(rld_norm.m$Var2, levels=levels_rl)
     #colssi<-alpha(rainbow(length(unique(rld.m$Var1))),alpha = .7)
-    colssi<-alpha(c("blue","dark red","forestgreen",rainbow(length(unique(rld.m$Var1))-3)),alpha = .7)
-
+    #colssi<-alpha(c("blue","dark red","forestgreen",rainbow(length(unique(rld.m$Var1))-3)),alpha = .7)
+    colssi<-alpha(c("forestgreen","dark red","blue",rainbow(length(unique(rld.m$Var1))-3)),alpha = .7)
     g2 <- ggplot(data=rld_norm.m, aes(x=Var2, y=value)) +
         geom_line(aes(colour=Var1, group=Var1), size=lw) +
         scale_x_continuous(breaks=scales::pretty_breaks(n=8)) +
@@ -1155,10 +1156,10 @@ plot_metagene_bar <- function(metagene_data, rl, sample="", output_rds_path="") 
         x.m$frame[x.m$frame=="frame 3"]<-"Frame 1"
         x.m$frame<-gsub(x.m$frame,pattern = "F",replacement = "f")
         x.m$frame<-factor(x.m$frame,levels=c("frame 0","frame 1","frame 2"))
-
+        #scale_color_manual(values = c("red","forestgreen","blue")) +
         g3 <- ggplot(data=x.m, aes(x=pos, xend=pos, y=0, yend=value)) +
             geom_segment(aes(colour=frame, group=frame)) +
-            scale_color_manual(values = c("red","forestgreen","blue")) +
+            scale_color_manual(values = c("red","blue","forestgreen")) +
             scale_x_continuous(breaks=res_breaks, labels=res_labels) +
             #scale_y_continuous(expand=c(0, 0)) +
             labs(x=res_x_lab, y="read count\n") +
@@ -1304,12 +1305,12 @@ plot_frame_dist_boxplot <- function(analysis_frame_cutoff, comp, sample="", outp
     #     theme(legend.position = "bottom", panel.background=element_blank()) +
     #     labs(fill = "frame") +
     #     guides(fill=guide_legend(title=""))
-
+    #scale_color_manual(values = alpha(c("red","forestgreen","blue"),alpha = .8)) +
     gg <- ggplot(data, aes(x = L1, y = value, color=Var2, group=Var2)) +
         stat_summary(fun.data = mean_se,size=1.5) +
         #stat_summary(fun.y = mean, geom="point",colour="magenta", size=2) +
         scale_x_discrete(name="read length") +
-        scale_color_manual(values = alpha(c("red","forestgreen","blue"),alpha = .8)) +
+        scale_color_manual(values = alpha(c("red","blue","forestgreen"),alpha = .8)) +
         scale_y_continuous(name="read distribution between frames",limits=c(0,1)) +
         theme(legend.position = "bottom", panel.background=element_blank()) +
         labs(color = "frame") +
