@@ -1,3 +1,4 @@
+# Edits by me
 Few modification to let RiboseQC run on R 4.2.1.
 1. Replaced ```nsns<-disjointExons(annotation,aggregateGenes=TRUE)``` in the ```prepare_annotation_files``` function with:  
    	```
@@ -18,7 +19,7 @@ Run the following code to install and load.
 install_github("hsinyenwu/RiboseQC_R4.2.1")
 library("RiboseQC")
 ```
-
+# Original readme
 # Ribo-seQC
 A comprehensive analysis tool for Ribo-seq and small RNA-seq data
 
