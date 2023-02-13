@@ -11,7 +11,7 @@ Few modification to let RiboseQC run on R 4.2.1.
 2. Removed  line ```genome_sequence<-get(library(GTF_annotation$genome,character.only = TRUE))``` from the ```load_annotation``` function.
 3. Add line ```gtfdata <- gtfdata[!is.na(gtfdata$transcript_id),]``` This is to remove rows where ```transcript_id==NA``` from the ```gtfdata``` GRanges object.   
 4. Command out ```#stopifnot(length(unique(gtfdata$transcript_id))==n_transcripts-1)```
-5. Switch colors "blue" and "forestgreen". So Frame 0 is Dark Red, Frame 1 is Blue and Frame 2 is ForestGreen. (RiboseQC is Dark Red, ForestGreen and Blue)
+5. Switch colors "blue" and "forestgreen". So Frame 0 is Dark Red, Frame 1 is Blue and Frame 2 is ForestGreen. (RiboseQC uses Dark Red, ForestGreen and Blue). This modification is to match the output with RiboPlotR.
 
 
 Run the following code to install and load.
@@ -19,7 +19,7 @@ Run the following code to install and load.
 install_github("hsinyenwu/RiboseQC_R4.2.1")
 library("RiboseQC")
 ```
-# Original readme
+# Original readme by authors:
 # Ribo-seQC
 A comprehensive analysis tool for Ribo-seq and small RNA-seq data
 
