@@ -10,7 +10,7 @@ NULL
 #' @author Lorenzo Calviello, \email{calviello.l.bio@@gmail.com}
 #' @param annotation_file Full path to the annotation file (*Rannot). Or, a vector with paths to one annotation file per bam file.
 #' @param bam_files character vector containing the full path to the bam files
-#' @param chunk_size the number of alignments to read at each iteration, defaults to 5000000, increase when more RAM is available. Must be between 10000 and 100000000
+#' @param chunk_size the number of alignments to read at each iteration, defaults to 5000000, increase when more RAM is available. Must be between 10000 and 1000000000
 #' @param read_subset Select readlengths up to 99 percent of the reads, defaults to \code{TRUE}. Must be of length 1 or same length as bam_files.
 #' @param readlength_choice_method Method used to subset relevant read lengths (see \code{choose_readlengths} function); defaults to 'max_coverage'. Must be of length 1 or same length as bam_files.
 #' @param rescue_all_rls Set cutoff of 12 for read lengths ignored because of insufficient coverage. Defaults to \code{FALSE}. Must be of length 1 or same length as bam_files.
@@ -128,8 +128,8 @@ RiboseQC_analysis <- function(annotation_file, bam_files, read_subset = TRUE, re
         stop(paste("'chunk_size' must be an integer value (e.g. 5000000).", date(), 
             "\n"))
     }
-    if (chunk_size <= 1e+05 | chunk_size > 1e+08) {
-        stop(paste("'chunk_size' must be an integer value between 100000 and 100000000 (e.g. 5000000).", 
+    if (chunk_size <= 1e+05 | chunk_size > 1e+09) {
+        stop(paste("'chunk_size' must be an integer value between 100000 and 1000000000 (e.g. 5000000).", 
             date(), "\n"))
     }
     if (!is.character(annotation_file)) {
