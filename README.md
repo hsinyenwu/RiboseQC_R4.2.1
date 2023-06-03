@@ -12,7 +12,7 @@ Few modification to let RiboseQC run on R 4.2.1.
 3. Add line ```gtfdata <- gtfdata[!is.na(gtfdata$transcript_id),]``` This is to remove rows where ```transcript_id==NA``` from the ```gtfdata``` GRanges object.   
 4. Command out ```#stopifnot(length(unique(gtfdata$transcript_id))==n_transcripts-1)```
 5. Switch colors "blue" and "forestgreen". So Frame 0 is Dark Red, Frame 1 is Blue and Frame 2 is ForestGreen. (RiboseQC uses Dark Red, ForestGreen and Blue). This modification is to match the output with RiboPlotR.
-6. Modify chunk_size limits to `chunk_size > 1e+09` was `chunk_size < 1e+08` (i.e, 100M reads)
+6. Modify chunk_size limits to `chunk_size < 1e+09` was `chunk_size < 1e+08` (i.e, 100M reads)
 7. For the `RiboseQC_analysis` function, changed the default `readlength_choice_method = "max_coverage"` to `readlength_choice_method = "max_inframe"`
 
 Run the following code to install and load.
