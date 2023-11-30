@@ -1,5 +1,4 @@
-# Edits by me
-Few modification to let RiboseQC run on R 4.2.1.
+#### Few modification to let RiboseQC run on R 4.2.1.
 1. Replaced ```nsns<-disjointExons(annotation,aggregateGenes=TRUE)``` in the ```prepare_annotation_files``` function with:  
    	```
       nsns<-exonicParts(annotation, linked.to.single.gene.only=F)
