@@ -210,15 +210,14 @@ for (i in c(1:length(datasets))) {
   sample <- names(datasets)[[i]]
   
   knit_expanded <- paste0("\n\n```{r results='asis', echo=FALSE}\n\n
-                            cat(\"#### ", sample," {.tabset} \n \n\")\n\n
-                            ```") 
+                            cat(\"#### ", sample," {.tabset} \n \n\")\n\n```") 
   out = c(out, knit_expanded)
   
   for (comp in names(datasets[[sample]])){
     knit_expanded <- paste0("\n\n```{r results='asis', echo=FALSE}\n\n
                             cat(\"##### ", comp, "\n \n\")\n\n
-                            datatable(datasets[[\"", sample, "\"]][[\"", comp, "\"]], rownames=FALSE, options=list(dom='t')) %>% formatRound(c(3,4,5), 2)\n\n
-                            ```") 
+                            datatable(datasets[[\"", sample, "\"]][[\"", comp, "\"]], rownames=FALSE, options=list(dom='t')) %>% formatRound(c(3,4,5), 2)\n\n```"
+                            ) 
     out = c(out, knit_expanded)
   }
 }
@@ -256,8 +255,8 @@ for (i in c(1:length(datasets))) {
   sample <- names(datasets)[[i]]
   knit_expanded <- paste0("\n```{r results='asis', echo=FALSE}\n\n
                           cat(\"#### ", sample," {.tabset} \n \n\")\n\n
-                          datatable(datasets[[\"", sample, "\"]], rownames=FALSE, options=list(dom='t'))\n\n
-                          ```")
+                          datatable(datasets[[\"", sample, "\"]], rownames=FALSE, options=list(dom='t'))\n\n```"
+                          )
   out = c(out, knit_expanded)
 }
 ```
@@ -307,8 +306,8 @@ out = NULL
 for (i in c(1:length(rdata_list))) {
   knit_expanded <- paste0("\n```{r results='asis', echo=FALSE}\n\n
                           cat(\"## \", names(rdata_list)[", i,"], \"\n \n\")\n\n
-                          datatable(datasets[[", i, "]], rownames=FALSE)\n\n
-                          ```")
+                          datatable(datasets[[", i, "]], rownames=FALSE)\n\n```"
+                          )
   out = c(out, knit_expanded)
 }
 ```
@@ -337,8 +336,8 @@ out = NULL
 for (k in c(1:length(rdata_list))) {
   knit_expanded <- paste0("\n```{r results='asis', echo=FALSE}\n\n
                           cat(\"### \", names(rdata_list)[",k ,"], \"\n \n\")\n\n
-                          datatable(datasets[[", k, "]])\n\n
-                          ```")
+                          datatable(datasets[[", k, "]])\n\n```"
+                          )
   out = c(out, knit_expanded)
 }
 ```
@@ -363,8 +362,8 @@ out = NULL
 for (k in c(1:length(rdata_list))) {
   knit_expanded <- paste0("\n```{r results='asis', echo=FALSE}\n\n
                           cat(\"### \", names(rdata_list)[",k ,"], \"\n \n\")\n\n
-                          datatable(datasets[[", k, "]])\n\n
-                          ```")
+                          datatable(datasets[[", k, "]])\n\n```"
+                          )
   out = c(out, knit_expanded)
 }
 ```
