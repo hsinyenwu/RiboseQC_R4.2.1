@@ -13,11 +13,11 @@
 5. Switch colors "blue" and "forestgreen". So Frame 0 is Dark Red, Frame 1 is Blue and Frame 2 is ForestGreen. (RiboseQC uses Dark Red, ForestGreen and Blue). This modification is to match the output with RiboPlotR.
 6. Modify chunk_size limits to `chunk_size < 1e+09` was `chunk_size < 1e+08` (i.e, 100M reads)
 7. For the `RiboseQC_analysis` function, changed the default `readlength_choice_method = "max_coverage"` to `readlength_choice_method = "max_inframe"`  
-8. (Apr 28 2026. Thansk to Dr. Dolly Mehta for identifying the issue) Fixed unbalanced code-fence delimiters in inst/rmd/riboseqc_template_full.Rmd (six paste0() blocks generating dynamic chunks had indented closing ```), which caused HTML report generation to fail under knitr ≥ 1.46.
+8. (Apr 28 2026. Thansk to Dr. Dolly Mehta for identifying the issue) Fixed two issues in the report templates: (1) unbalanced code-fence delimiters in the dynamic paste0() chunks of `inst/rmd/riboseqc_template_full.Rmd` (originally lines 203, 210, 249, 300, 331, 357) that broke rendering under `knitr ≥ 1.46`; and (2) in both `inst/rmd/riboseqc_template_full.Rmd` and `inst/rmd/riboseqc_template.Rmd`, the §4.2.3 "Choice of read lengths" table now reads from results_choice$final_choice and displays each selected read length with its P-site offset, so the table reflects the readlength_choice_method actually used (e.g. max_inframe) instead of always filtering on max_coverage.
 
 Run the following code to install and load.
 ```
-install_github("hsinyenwu/RiboseQC_R4.2.1")
+remotes::install_github("hsinyenwu/RiboseQC_R4.2.1",force = T)
 library("RiboseQC")
 ```
 # Original readme by authors:
