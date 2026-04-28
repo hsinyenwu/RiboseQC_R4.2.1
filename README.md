@@ -13,6 +13,7 @@
 5. Switch colors "blue" and "forestgreen". So Frame 0 is Dark Red, Frame 1 is Blue and Frame 2 is ForestGreen. (RiboseQC uses Dark Red, ForestGreen and Blue). This modification is to match the output with RiboPlotR.
 6. Modify chunk_size limits to `chunk_size < 1e+09` was `chunk_size < 1e+08` (i.e, 100M reads)
 7. For the `RiboseQC_analysis` function, changed the default `readlength_choice_method = "max_coverage"` to `readlength_choice_method = "max_inframe"`
+8.(Apr 28 2026. Thansk to Dr. Dolly Mehta for identifying the issue) Fixed unbalanced code-fence delimiters in inst/rmd/riboseqc_template_full.Rmd (six paste0() blocks generating dynamic chunks had indented closing ```), which caused HTML report generation to fail under knitr ≥ 1.46.
 
 Run the following code to install and load.
 ```
