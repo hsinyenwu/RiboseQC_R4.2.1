@@ -2549,6 +2549,7 @@ prepare_annotation_files<-function(annotation_directory,twobit_file=NULL,gtf_fil
                          "common_name: ",scientific_name,"\n",
                          "provider: NA","\n",
                          "genome: ",annotation_name,"\n",
+                         "release_date: NA","\n",
                          "source_url: NA","\n",
                          "organism_biocview: ", scientific_name,"\n",
                          "BSgenomeObjname: ",scientific_name,"\n",
@@ -2579,13 +2580,16 @@ prepare_annotation_files<-function(annotation_directory,twobit_file=NULL,gtf_fil
 
         unlink(paste(annotation_directory,pkgnm,sep="/"),recursive=TRUE)
 
-        # BSgenomeForge (Bioc >= 3.19) is the new home of forgeBSgenomeDataPkg.
-        # tryCatch falls back to BSgenome only on older Bioconductor where
-        # BSgenomeForge doesn't exist yet (no warning is emitted there).
-        tryCatch(
-            BSgenomeForge::forgeBSgenomeDataPkg(x=seed_dest, destdir=annotation_directory, seqs_srcdir=dirname(twobit_file)),
-            error = function(e) BSgenome::forgeBSgenomeDataPkg(x=seed_dest, destdir=annotation_directory, seqs_srcdir=dirname(twobit_file))
-        )
+        # forgeBSgenomeDataPkg moved from BSgenome to BSgenomeForge in Bioc 3.19 (April 2024).
+        # Use the new home if it exists, otherwise fall back to the original BSgenome::
+        # implementation for older Bioconductor (where no deprecation warning is emitted).
+        # Errors in the chosen path are NOT redirected to the other path — they propagate
+        # with their real error message.
+        if (requireNamespace("BSgenomeForge", quietly = TRUE)) {
+            BSgenomeForge::forgeBSgenomeDataPkg(x=seed_dest, destdir=annotation_directory, seqs_srcdir=dirname(twobit_file))
+        } else {
+            BSgenome::forgeBSgenomeDataPkg(x=seed_dest, destdir=annotation_directory, seqs_srcdir=dirname(twobit_file))
+        }
         cat(paste("Creating the BSgenome package --- Done! ",date(),"\n",sep = ""))
 
         cat(paste("Installing the BSgenome package ... ",date(),"\n",sep = ""))
@@ -2614,13 +2618,14 @@ prepare_annotation_files<-function(annotation_directory,twobit_file=NULL,gtf_fil
         # "genome version information is not available for this TxDb object"
         GenomeInfoDb::genome(seqinfo_genome) <- annotation_name
 
-        # txdbmaker (Bioc >= 3.19) is the new home of makeTxDbFromGFF.
-        # tryCatch falls back to GenomicFeatures only on older Bioconductor
-        # where txdbmaker doesn't exist yet (no warning is emitted there).
-        annotation <- tryCatch(
-            txdbmaker::makeTxDbFromGFF(file=gtf_file, format="gtf", chrominfo=seqinfo_genome),
-            error = function(e) GenomicFeatures::makeTxDbFromGFF(file=gtf_file, format="gtf", chrominfo=seqinfo_genome)
-        )
+        # makeTxDbFromGFF moved from GenomicFeatures to txdbmaker in Bioc 3.19 (April 2024).
+        # Use the new home if it exists, otherwise fall back to GenomicFeatures::
+        # for older Bioconductor (where no deprecation warning is emitted).
+        if (requireNamespace("txdbmaker", quietly = TRUE)) {
+            annotation <- txdbmaker::makeTxDbFromGFF(file=gtf_file, format="gtf", chrominfo=seqinfo_genome)
+        } else {
+            annotation <- GenomicFeatures::makeTxDbFromGFF(file=gtf_file, format="gtf", chrominfo=seqinfo_genome)
+        }
 
         saveDb(annotation, file=paste(annotation_directory,"/",basename(gtf_file),"_TxDb",sep=""))
         cat(paste("Creating the TxDb object --- Done! ",date(),"\n",sep = ""))
