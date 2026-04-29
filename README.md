@@ -48,8 +48,8 @@ Added `BSgenomeForge` and `txdbmaker` to `Suggests`. They are not required (the 
 
 Run the following code to install and load.
 ```
-detach("package:RiboseQC", unload = TRUE)
-remove.packages("RiboseQC")
+#detach("package:RiboseQC", unload = TRUE) #run if the RiboseQC is loaded
+#remove.packages("RiboseQC") #run if you previously installed an older version of RiboseQC
 remotes::install_github("hsinyenwu/RiboseQC_R4.2.1",force = T)
 library("RiboseQC")
 ```
