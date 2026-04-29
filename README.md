@@ -1,4 +1,4 @@
-#### Few modification to let RiboseQC run on R 4.2.1.
+## Few modification to let RiboseQC run on R 4.2.1.
 1. Replaced ```nsns<-disjointExons(annotation,aggregateGenes=TRUE)``` in the ```prepare_annotation_files``` function with:  
    	```
       nsns<-exonicParts(annotation, linked.to.single.gene.only=F)
@@ -14,6 +14,37 @@
 6. Modify chunk_size limits to `chunk_size < 1e+09` was `chunk_size < 1e+08` (i.e, 100M reads)
 7. For the `RiboseQC_analysis` function, changed the default `readlength_choice_method = "max_coverage"` to `readlength_choice_method = "max_inframe"`  
 8. (Apr 28 2026. Thansk to Dr. Dolly Mehta for identifying the first issue) Fixed two issues in the report templates: (1) unbalanced code-fence delimiters in the dynamic paste0() chunks of `inst/rmd/riboseqc_template_full.Rmd` (originally lines 203, 210, 249, 300, 331, 357) that broke rendering under `knitr ≥ 1.46`; and (2) in both `inst/rmd/riboseqc_template_full.Rmd` and `inst/rmd/riboseqc_template.Rmd`, the §4.2.3 "Choice of read lengths" table now reads from results_choice$final_choice and displays each selected read length with its P-site offset, so the table reflects the readlength_choice_method actually used (e.g. max_inframe) instead of always filtering on max_coverage.
+
+### More update for R 4.0 and other packages
+#### Changes from upstream `lcalviell/Ribo-seQC`
+This fork updates `RiboseQC` for compatibility with current R (≥ 4.2) and Bioconductor (≥ 3.19) while preserving backward compatibility with older releases.  
+
+##### `R/riboseqc.R` — `prepare_annotation_files()`
+Three changes, all confined to the annotation-preparation function. Analysis logic is unchanged.
+1. **BSgenome seed metadata updated.** Replaced the deprecated `provider_version`, `release_date`, and `release_name` fields with the modern `genome` field, matching current `BSgenomeForge` seed format requirements.
+
+2. **`forgeBSgenomeDataPkg()` and `makeTxDbFromGFF()` calls relocated.** As of Bioconductor 3.19 (April 2024), these functions moved to dedicated packages (`BSgenomeForge` and `txdbmaker`). Calls now use the new namespaces by default with a `tryCatch` fallback to the original packages, so the function runs without deprecation warnings on current Bioconductor while still working on older releases.
+
+3. **Genome version explicitly set on seqinfo.** Added `GenomeInfoDb::genome(seqinfo_genome) <- annotation_name` before the `makeTxDbFromGFF()` call to suppress the "genome version information is not available for this TxDb object" warning.
+
+Together these three changes eliminate all five deprecation warnings emitted by `prepare_annotation_files()` under current Bioconductor:
+
+- `forgeBSgenomeDataPkg() has moved from BSgenome to the BSgenomeForge package`
+- `field 'provider_version' is deprecated in favor of 'genome'`
+- `field 'release_name' is deprecated`
+- `makeTxDbFromGFF() has moved from GenomicFeatures to the txdbmaker package`
+- `genome version information is not available for this TxDb object`
+
+#### `DESCRIPTION`
+
+Added `BSgenomeForge` and `txdbmaker` to `Suggests`. They are not required (the package still installs and runs without them on older Bioconductor), but listing them advertises the recommended dependencies for users on Bioconductor ≥ 3.19.
+
+#### Compatibility
+
+| R version | Bioconductor version | Status |
+|-----------|----------------------|--------|
+| 4.2 – 4.4+ | 3.19+ | Primary target; uses the new `BSgenomeForge` / `txdbmaker` paths |
+| 4.2 – 4.3  | 3.16 – 3.18 | Supported via fallbacks; deprecation warnings do not exist on these older releases |
 
 Run the following code to install and load.
 ```
